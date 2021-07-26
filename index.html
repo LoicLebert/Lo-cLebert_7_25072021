@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <title> Les petits plats </title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/8264f3a608.js" crossorigin="anonymous"></script>
+    <script src="assets/js/bootstrap.min.js" defer></script>
+    <script src="assets/js/components/index.js" defer></script>
+    <script src="assets/js/data/data.js" defer></script>
+</head>
+
+
+<body class="container">
+    <header>
+        <img id="logo" src="assets/images/logo.png" alt="logo Les petits plats">
+        <div class="input-group search-bar">
+            <input class="form-control border-end-0 border" type="search" id="example-search-input"
+                placeholder="Recherchez un ingrédient, appareil, ustensiles ou une recette">
+            <span class="input-group-append">
+                <button class="btn border-start-0 border-bottom-0 border search-btn" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </header>
+
+    <main>
+
+        <nav id="nav-buttons">
+            <div class="dropdown">
+                <button class="btn btn-blue btn-nav dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Ingrédients
+                </button>
+                <div class="dropdown-menu first-dropdown" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-green btn-nav dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Appareil
+                </button>
+                <div class="dropdown-menu second-dropdown" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-red btn-nav dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ustensiles
+                </button>
+                <div class="dropdown-menu third-dropdown" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+
+        </nav>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+</body>
+
+</html>
