@@ -2,6 +2,7 @@ body {
     font-family: "Lato", sans-serif;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 header {
@@ -13,7 +14,8 @@ header {
 main {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    width: 1240px;
+    height: 100vh;
 }
 
 #logo {
@@ -32,6 +34,13 @@ main {
     width: 69px;
     border: none;
     background-color : #E7E7E7;
+    border-top-right-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+    outline: none !important;
+    border: none !important;
+    outline-style: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
 }
 
 .fa-search {
@@ -51,39 +60,250 @@ input::placeholder {
     display: flex;
     flex-direction: row;
     width: 1240px;
-    margin-top: 20px;
     align-items: flex-start;
     gap: 20px;
+    order: 2;
 }
 
-.btn-nav {
+.btn {
+    width: 170px;
+    height: 69px;
+    position: relative;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.btn-text {
+    pointer-events: none;
+}
+
+.fa-chevron-down {
+    display: inline-block;
+    font-size: 25px;
+    width: 25px;
+    height: 25px;
+    color: white;
+    position: absolute;
+    right: 10px;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.fa-chevron-up {
+    font-size: 25px;
+    width: 25px;
+    height: 25px;
+    color: white;
+    z-index: 9999;
+    pointer-events: none;
+    align-self: center;
+    justify-self: space-between;
+}
+
+#first-btn, #second-btn, #third-btn {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+#btn-blue{
+   background-color:#3282F7;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+}
+
+#btn-green{
+    background-color:#68D9A4;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 170px;
-    height: 69px;
-    color: white;
-    font-weight: 700;
-    font-size: 18px;
 }
 
-.dropdown-menu a {
-    color: white;
-    font-weight: 400;
-    font-size: 18px;
-}
-
-.btn-blue, .first-dropdown {
-   background-color:#3282F7;
-   
-}
-
-.btn-green, .second-dropdown{
-    background-color:#68D9A4;
-}
-
-.btn-red, .third-dropdown {
+#btn-red{
     background-color:#ED6454;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
+
+#input-arrow-container {
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    text-align: center;
+}
+
+#first-dropdown, #second-dropdown, #third-dropdown {
+    display: none;
+}
+
+.dropdown-input {
+    border: none;
+}
+
+.border {
+    border: none !important;
+}
+
+.search-bar-input:focus {
+    background-color: #E7E7E7;
+    outline: none !important;
+    border: none !important;
+    outline-style: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+input[type="text"]::placeholder {
+    padding-left: 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    opacity: 0.5;
+}
+
+input {
+    outline: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#first-dropdown.active, #second-dropdown.active, #third-dropdown.active {
+    display: inline-block;
+    max-height: 660px;
+    z-index: 9999;
+    border-radius: .25rem;
+}
+
+#first-dropdown.active {
+    background-color: #3282F7;
+    min-width: 1150px;
+}
+
+#second-dropdown.active {
+    background-color: #68D9A4;
+}
+
+#third-dropdown.active {
+    background-color: #ED6454;
+}
+
+#first-dropdown input {
+    width: 667px;
+    height: 69px;
+    border-radius: .25rem;
+    background-color: #3282F7;
+}
+
+#second-dropdown input {
+    width: 300px;
+    height: 69px;
+    border-radius: .25rem;
+    background-color: #68D9A4;
+}
+
+#third-dropdown input {
+    width: 400px;
+    height: 69px;
+    border-radius: .25rem;
+    background-color: #ED6454;
+}
+
+#first-text-container, #second-text-container, #third-text-container {
+    max-height: 630px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    padding-bottom: 1.5em;
+    column-gap: 1em;
+    line-height: 1.8;
+    padding-left: 1.5em;
+}
+
+.c_dropdown-item {
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    max-width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+a:hover {
+    text-decoration: none;
+    color: white;
+    opacity: .5;
+}
+
+#selected-ingredient-container, #selected-appliance-container, #selected-ustensils-container {
+    display: none;
+}
+
+#selected-appliance-container {
+    display: none;
+}
+
+#selected-container {
+    margin-bottom: 1.5em;
+    display: flex;
+    flex-direction: row;
+    width: 1240px;
+    justify-content: start;
+    gap: 1em;
+}
+
+#selected-ingredient-container.active, #selected-appliance-container.active, #selected-ustensils-container.active {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: .25rem;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1;
+    gap: 1em;
+}
+
+#selected-ingredient-container.active {
+    display: flex;
+    background-color: #3282F7;
+}
+
+#selected-appliance-container.active {
+    display: flex;
+    background-color: #68D9A4;
+}
+
+#selected-ustensils-container.active {
+    display: flex;
+    background-color: #ED6454;
+}
+
+.remove-selected {
+    display: inline;
+    width: 18px;
+    height: 18px;
+    color: white;
+    font-size: 18px;
+    order: 2;
+}
+
+
+
 
