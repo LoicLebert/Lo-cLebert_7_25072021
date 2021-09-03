@@ -8,36 +8,53 @@
  */
 export function searchAlgorithmMapping(recipes) {
     const searchMap = new Map();
+
     recipes.forEach(recipe => {
-        for (let i = 2; i < (recipe.name.toLowerCase()).length; i++) {
-            if (searchMap.get((recipe.name.toLowerCase()).substring(0, i))) {
-                searchMap.get((recipe.name.toLowerCase()).substring(0, i)).push(recipe)
+        let nameLower = recipe.name.toLowerCase()
+        let applianceLower = recipe.appliance.toLowerCase()
+        let descriptionLower = recipe.description.toLowerCase()
+
+        for (let i = 2; i < (recipe.name).length; i++) {
+            if (searchMap.get((nameLower).substring(0, i))) {
+                searchMap.get((nameLower).substring(0, i)).push(recipe)
             } else {
-                searchMap.set((recipe.name.toLowerCase()).substring(0, i), [recipe])
+                searchMap.set((nameLower).substring(0, i), [recipe])
             }
         }
-        for (let i = 2; i < (recipe.appliance.toLowerCase()).length; i++) {
-            if (searchMap.get((recipe.appliance.toLowerCase()).substring(0, i))) {
-                searchMap.get((recipe.appliance.toLowerCase()).substring(0, i)).push(recipe)
+
+        for (let i = 2; i < (recipe.appliance).length; i++) {
+            if (searchMap.get((applianceLower).substring(0, i))) {
+                searchMap.get((applianceLower).substring(0, i)).push(recipe)
             } else {
-                searchMap.set((recipe.appliance.toLowerCase()).substring(0, i), [recipe])
+                searchMap.set((applianceLower).substring(0, i), [recipe])
             }
         }
+
+        for (let i = 2; i < (recipe.description).length; i++) {
+            if (searchMap.get((descriptionLower).substring(0, i))) {
+                searchMap.get((descriptionLower).substring(0, i)).push(recipe)
+            } else {
+                searchMap.set((descriptionLower).substring(0, i), [recipe])
+            }
+        }
+
         recipe.ingredients.forEach(ingredient => {
-            for (let i = 2; i < (ingredient.ingredient.toLowerCase()).length; i++) {
-                if (searchMap.get((ingredient.ingredient.toLowerCase()).substring(0, i))) {
-                    searchMap.get((ingredient.ingredient.toLowerCase()).substring(0, i)).push(recipe)
+            let ingredientLower = ingredient.ingredient.toLowerCase()
+            for (let i = 2; i < (ingredient.ingredient).length; i++) {
+                if (searchMap.get((ingredientLower).substring(0, i))) {
+                    searchMap.get((ingredientLower).substring(0, i)).push(recipe)
                 } else {
-                    searchMap.set((ingredient.ingredient.toLowerCase()).substring(0, i), [recipe])
+                    searchMap.set((ingredientLower).substring(0, i), [recipe])
                 }
             }
         })
         recipe.ustensils.forEach(ustensils => {
-            for (let i = 2; i < (ustensils.toLowerCase()).length; i++) {
-                if (searchMap.get((ustensils.toLowerCase()).substring(0, i))) {
-                    searchMap.get((ustensils.toLowerCase()).substring(0, i)).push(recipe)
+            let ustenstilsLower = ustensils.toLowerCase()
+            for (let i = 2; i < (ustensils).length; i++) {
+                if (searchMap.get((ustenstilsLower).substring(0, i))) {
+                    searchMap.get((ustenstilsLower).substring(0, i)).push(recipe)
                 } else {
-                    searchMap.set((ustensils.toLowerCase()).substring(0, i), [recipe])
+                    searchMap.set((ustenstilsLower).substring(0, i), [recipe])
                 }
             }
         })
@@ -45,3 +62,52 @@ export function searchAlgorithmMapping(recipes) {
     console.log(searchMap)
     return searchMap
 }
+
+/**
+ * START OF THE SECOND ALGORITHM PART
+ * ===========================================================================================
+ */
+
+/**
+ * This algorithm loops on each recipe for every user research. ALGO V2
+ * @param {*} recipes
+ * @param {*} searchInput
+ * @param {*} filters
+ * @returns
+ */
+export function directSearchAlgorithm(recipes, searchInput) {
+    if (searchInput.length < 3) {
+        return recipes
+    }
+
+    const recipesResultSet = new Set()
+
+    recipes.forEach(recipe => {
+
+        if ((recipe.name.toLowerCase()).substring(0, searchInput.length) === searchInput) {
+            recipesResultSet.add(recipe)
+        }
+
+        else if ((recipe.appliance.toLowerCase()).substring(0, searchInput.length) === searchInput)
+            recipesResultSet.add(recipe)
+
+        else if ((recipe.description.toLowerCase()).substring(0, searchInput.length) === searchInput)
+            recipesResultSet.add(recipe)
+
+        recipe.ingredients.forEach(ingredient => {
+            if ((ingredient.ingredient.toLowerCase()).substring(0, searchInput.length) === searchInput)
+                recipesResultSet.add(recipe)
+        })
+
+        recipe.ustensils.forEach(ustensils => {
+            if ((ustensils.toLowerCase()).substring(0, searchInput.length) === searchInput)
+                recipesResultSet.add(recipe)
+        })
+    })
+    return recipesResultSet
+}
+
+/**
+ * END OF THE SECOND ALGORITHM PART
+ * ===========================================================================================
+ */

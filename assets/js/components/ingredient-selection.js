@@ -1,17 +1,39 @@
-// import { recipes } from "../data/data"
+import { ingredientDropdownDisplay } from "./index.js"
+import { ingredientSet } from "./index.js"
+import { displayRecipes } from "./index.js"
+import { recipes } from "../data/data.js"
 
-// export function ingredientSelection(e) {
-//     recipes.forEach(recipe => {
-//         if (recipe.ingredients.forEach(ingredient => {
-//             (ingredient === e.value)
-//         }))
-//             recipesResultSet.add(recipe)
-//     })
-//     console.log("ça marche")
-// }
+// SEARCH INPUT //
 
-// function init() {
-//     ingredientSelection()
-// }
+/**
+ * This function launches the algorithm when the ingredient search is used
+ */
+export function setupIngredientSearch() {
+    document.querySelector(".dropdown-input").addEventListener("keydown", (e) => ingredientSearched(e))
+    // ajouter retour
+}
 
-// init()
+/**
+ * This function launches the receipes display according to the user request
+ * @param {*} e 
+ */
+function ingredientSearched(e) {
+    ingredientDropdownDisplay(ingredientSearchAlgorithm(ingredientSet, e.target.value.toLowerCase()))
+}
+
+export function ingredientSearchAlgorithm(ingredientSet, searchInput) {
+    if (searchInput.length == 0) {
+        return ingredientSet
+    }
+
+    const ingredientResultSet = new Set()
+
+
+    ingredientSet.forEach(ingredient => {
+
+        if ((ingredient.toLowerCase()).substring(0, searchInput.length) === searchInput) {
+            ingredientResultSet.add(ingredient)
+        }
+    })
+    return ingredientResultSet
+}

@@ -1,5 +1,10 @@
 import { recipes } from "../data/data.js"
+import { directSearchAlgorithm } from "./search-results.js"
 import { searchAlgorithmMapping } from "./search-results.js"
+import { setupIngredientSearch } from "./ingredient-selection.js"
+import { setupApplianceSearch } from "./appliance-selection.js"
+import { setupUstensilsSearch } from "./ustensils-selection.js"
+
 
 /** 
  * This part sorts ingredients, appliances and ustensils inside sets to prevent them from repeating themselves
@@ -8,14 +13,14 @@ import { searchAlgorithmMapping } from "./search-results.js"
  * @param {*} appliance
  * @param {*} ustensils
  */
-const ingredientSet = new Set([])
-const applianceSet = new Set([])
-const ustensilSet = new Set([])
+export const ingredientSet = new Set([])
+export const applianceSet = new Set([])
+export const ustensilsSet = new Set([])
 
 function setCreation() {
     recipes?.forEach(recipe => recipe.ingredients?.forEach(ingredient => ingredientSet.add(ingredient.ingredient)))
     recipes?.forEach(appliance => applianceSet.add(appliance.appliance))
-    recipes?.forEach(recipe => recipe.ustensils?.forEach(ustensils => ustensilSet.add(ustensils)))
+    recipes?.forEach(recipe => recipe.ustensils?.forEach(ustensils => ustensilsSet.add(ustensils)))
 }
 
 /** 
@@ -24,15 +29,17 @@ function setCreation() {
  * @param {*} appliance
  * @param {*} ustensils
  */
-function navSelection() {
+export function ingredientDropdownDisplay(ingredientSet) {
+    document.querySelector("#dropdown-ingredients-container").innerHTML = ""
     ingredientSet?.forEach(ingredient => {
         let ingredientHTML = document.createElement("a")
         ingredientHTML.innerText = ingredient
         ingredientHTML.classList.add("c_dropdown-item")
         ingredientHTML.setAttribute("href", "#")
         ingredientHTML.setAttribute("s_key", ingredient)
-        document.querySelector("#first-text-container").appendChild(ingredientHTML)
+        document.querySelector("#dropdown-ingredients-container").appendChild(ingredientHTML)
         ingredientHTML.addEventListener("click", e => {
+            tagSelected(e)
             let selectedIngredientContainer = document.createElement("div")
             selectedIngredientContainer.id = "selected-ingredient-container"
             selectedIngredientContainer.classList.add("active")
@@ -43,18 +50,22 @@ function navSelection() {
             function removeIngredient() {
                 document.querySelector("#selected-ingredient-container").classList.remove("active")
                 selectedIngredientContainer.remove()
+                displayRecipes(recipes)
             }
         })
     })
+}
 
+export function applianceDropdownDisplay(applianceSet) {
     applianceSet?.forEach(appliance => {
         let applianceHTML = document.createElement("a")
         applianceHTML.innerText = appliance
         applianceHTML.classList.add("c_dropdown-item")
         applianceHTML.setAttribute("href", "#")
         applianceHTML.setAttribute("s_key", appliance)
-        document.querySelector("#second-text-container").appendChild(applianceHTML)
+        document.querySelector("#dropdown-appliance-container").appendChild(applianceHTML)
         applianceHTML.addEventListener("click", e => {
+            tagSelected(e)
             let selectedApplianceContainer = document.createElement("div")
             selectedApplianceContainer.id = "selected-appliance-container"
             selectedApplianceContainer.classList.add("active")
@@ -64,18 +75,24 @@ function navSelection() {
             removeApplianceBtn.addEventListener("click", removeAppliance)
             function removeAppliance() {
                 document.querySelector("#selected-appliance-container").remove("active")
+                selectedApplianceContainer.remove()
+                displayRecipes(recipes)
             }
         })
     })
+}
 
-    ustensilSet?.forEach(ustensils => {
+
+export function ustensilsDropdownDisplay(ustensilsSet) {
+    ustensilsSet?.forEach(ustensils => {
         let ustensilsHTML = document.createElement("a")
         ustensilsHTML.innerText = ustensils
         ustensilsHTML.classList.add("c_dropdown-item")
         ustensilsHTML.setAttribute("href", "#")
         ustensilsHTML.setAttribute("s_key", ustensils)
-        document.querySelector("#third-text-container").appendChild(ustensilsHTML)
+        document.querySelector("#dropdown-ustensils-container").appendChild(ustensilsHTML)
         ustensilsHTML.addEventListener("click", e => {
+            tagSelected(e)
             let selectedUstensilsContainer = document.createElement("div")
             selectedUstensilsContainer.id = "selected-ustensils-container"
             selectedUstensilsContainer.classList.add("active")
@@ -85,6 +102,8 @@ function navSelection() {
             removeUstensilsBtn.addEventListener("click", removeUstensils)
             function removeUstensils() {
                 document.querySelector("#selected-ustensils-container").classList.remove("active")
+                selectedUstensilsContainer.remove()
+                displayRecipes(recipes)
             }
         })
     })
@@ -94,11 +113,10 @@ function navSelection() {
  * This function displays the dropdown items on click
  * @param {*} recipe
  */
-function displayDropdown(searchMap) {
+function displayDropdown() {
     document.querySelector("#btn-blue").addEventListener("click", e => {
         document.querySelector("#first-dropdown").classList.add("active")
         document.querySelector("#btn-blue").style.display = "none"
-        displayRecipes(searchMap.get(e.target.value) || recipes)
     })
 
     document.querySelector("#btn-green").addEventListener("click", e => {
@@ -138,7 +156,7 @@ function displayDropdown(searchMap) {
  * @param {*} recipes
  */
 
-function displayRecipes(recipes) {
+export function displayRecipes(recipes) {
     document.querySelector("#recipes-section").innerHTML = ""
     recipes?.forEach(recipe => {
         let recipeContainer = document.createElement("div")
@@ -184,8 +202,8 @@ function displayRecipes(recipes) {
  * @param {*} searchMap 
  */
 
-function setupInputSearch(searchMap) {
-    document.querySelector("#search-input").addEventListener("change", (e) => searchAlgorithm(e, searchMap))
+function setupInputSearch_firstAlgorithm(searchMap) {
+    document.querySelector("#search-input").addEventListener("change", (e) => searchAlgorithmV1(e, searchMap))
 }
 
 /**
@@ -193,21 +211,99 @@ function setupInputSearch(searchMap) {
  * @param {*} e 
  * @param {*} searchMap 
  */
-function searchAlgorithm(e, searchMap) {
+function searchAlgorithmV1(e, searchMap) {
     displayRecipes(searchMap.get(e.target.value.toLowerCase()) || recipes)
 }
 
-/** 
- * This function displays the dropdown items on click
- * @param {*} ingredientSet
+/** START OF THE SECOND ALGORITHM PART
+ * ===========================================================================================
  */
+
+/**
+ * This function launches the algorithm when user uses the input search 
+ */
+
+function setupInputSearch_secondAlgorithm() {
+    document.querySelector("#search-input").addEventListener("change", (e) => searchAlgorithmV2(e))
+}
+
+/**
+ * This function launches the receipes display according to the user request
+ * @param {*} e 
+ */
+function searchAlgorithmV2(e) {
+    console.log("ok")
+    displayRecipes(directSearchAlgorithm(recipes, e.target.value.toLowerCase()))
+}
+
+/** END OF THE SECOND ALGORITHM PART 
+ * ===========================================================================================
+ */
+
+function setupTag() {
+    document.querySelector(".c_dropdown-item").addEventListener("click", (e) => tagSelected(e))
+}
+
+/**
+ * 
+ */
+function tagSelected(e) {
+    displayRecipes(TagAlgorithm(recipes, e.target.text.toLowerCase()))
+}
+
+// function TagAlgorithm(recipes, selectedFilter) {
+//     const TagResultSet = new Set()
+
+//     recipes.forEach(recipe => {
+//         if ((recipe.appliance.toLowerCase()) === selectedFilter)
+//             TagResultSet.add(recipe)
+
+//         recipe.ustensils.forEach(ustensils => {
+//             if ((ustensils.toLowerCase()) === selectedFilter)
+//                 ustensilsTagResultSet.add(recipe)
+//         })
+
+//         recipe.ingredients.forEach(ingredient => {
+//             if ((ingredient.ingredient.toLowerCase()) === selectedFilter)
+//                 TagResultSet.add(recipe)
+//         })
+//     })
+//     return TagResultSet
+// }
+function TagAlgorithm(recipes, selectedFilter) {
+    const TagResultSet = new Set()
+
+    recipes.forEach(recipe => {
+        if ((recipe.appliance.toLowerCase()) === selectedFilter)
+            TagResultSet.add(recipe)
+
+        recipe.ustensils.forEach(ustensils => {
+            if ((ustensils.toLowerCase()) === selectedFilter)
+                ustensilsTagResultSet.add(recipe)
+        })
+
+        recipe.ingredients.forEach(ingredient => {
+            if ((ingredient.ingredient.toLowerCase()) === selectedFilter)
+                TagResultSet.add(recipe)
+        })
+    })
+    return TagResultSet
+}
+
 function init() {
     setCreation()
-    navSelection()
-    const searchMap = searchAlgorithmMapping(recipes, ingredientSet, applianceSet, ustensilSet)
-    displayDropdown(searchMap)
+    displayDropdown()
     displayRecipes(recipes)
-    setupInputSearch(searchMap)
+    ingredientDropdownDisplay(ingredientSet)
+    applianceDropdownDisplay(applianceSet)
+    ustensilsDropdownDisplay(ustensilsSet)
+    const searchMap = searchAlgorithmMapping(recipes, ingredientSet, applianceSet, ustensilsSet)
+    setupInputSearch_firstAlgorithm(searchMap)
+    // setupInputSearch_secondAlgorithm()
+    setupTag()
+    setupIngredientSearch()
+    setupApplianceSearch()
+    setupUstensilsSearch()
 }
 
 init()
