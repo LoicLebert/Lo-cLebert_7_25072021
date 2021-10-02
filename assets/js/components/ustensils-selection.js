@@ -1,3 +1,9 @@
+import { ustensilsTagSelected } from "./filters.js"
+import { searchAlgorithmV1 } from "./search.js"
+import { searchAlgorithmV2 } from "./search.js"
+import { searchMap } from "./searchMapInitialisation.js"
+import { removeUstensilsFilter } from "./filters.js"
+
 /**
  * This function launches the receipes display according to the user request
  * @param {*} e 
@@ -39,7 +45,9 @@ export function displayUstensilsFilter(ustensilsSet) {
         document.querySelector("#dropdown-ustensils-container").appendChild(ustensilsHTML)
         ustensilsHTML.addEventListener("click", e => {
             e.preventDefault()
-            tagSelected(e)
+            ustensilsTagSelected(ustensils)
+            let searchQuery = document.querySelector("#search-input").text
+            searchAlgorithmV1(searchQuery, searchMap)
             let tagId = "selected-ustensils-container-" + ustensils
             var element = document.getElementById(tagId);
             if (typeof (element) == 'undefined' || element == null) {
@@ -47,12 +55,14 @@ export function displayUstensilsFilter(ustensilsSet) {
                 selectedUstensilsContainer.id = "selected-ustensils-container-" + ustensils
                 selectedUstensilsContainer.classList.add("selected-ustensils-container")
                 selectedUstensilsContainer.innerHTML = ustensils
-
                 let removeUstensilsBtn = document.createElement("i")
                 removeUstensilsBtn.classList.add("far", "fa-times-circle", "remove-selected-ustensils")
                 removeUstensilsBtn.addEventListener("click", e => {
+                    removeUstensilsFilter(ustensils)
                     selectedUstensilsContainer.remove()
-                    displayRecipes(recipes)
+                    let searchQuery = document.querySelector("#search-input").text
+                    searchAlgorithmV1(searchQuery, searchMap)
+                    // searchAlgorithmV2(e, recipes)
                 })
                 selectedUstensilsContainer.appendChild(removeUstensilsBtn)
                 document.querySelector("#selected-container").appendChild(selectedUstensilsContainer)

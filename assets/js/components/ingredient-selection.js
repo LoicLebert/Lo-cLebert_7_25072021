@@ -1,11 +1,13 @@
-import { displayRecipes } from "./display.js"
-import { tagSelected } from "./filters.js"
+import { ingredientTagSelected } from "./filters.js"
+import { searchAlgorithmV1 } from "./search.js"
+import { searchAlgorithmV2 } from "./search.js"
+import { searchMap } from "./searchMapInitialisation.js"
+import { removeIngredientFilter } from "./filters.js"
 /**
  * This function launches the receipes display according to the user request
  * @param {*} e 
  */
 function ingredientSearched(e) {
-    // ingredientDropdownDisplay(ingredientSearchAlgorithm(ingredientSet, e.target.value.toLowerCase()))
     displayIngredientFilter(ingredientSearchAlgorithm(ingredientSet, e.target.value.toLowerCase()))
 }
 
@@ -42,7 +44,9 @@ export function displayIngredientFilter(ingredientSet) {
         document.querySelector("#dropdown-ingredients-container").appendChild(ingredientHTML)
         ingredientHTML.addEventListener("click", e => {
             e.preventDefault()
-            tagSelected(e)
+            ingredientTagSelected(ingredient)
+            let searchQuery = document.querySelector("#search-input").text
+            searchAlgorithmV1(searchQuery, searchMap)
             let tagId = "selected-ingredient-container-" + ingredient
             var element = document.getElementById(tagId);
             if (typeof (element) == 'undefined' || element == null) {
@@ -53,8 +57,11 @@ export function displayIngredientFilter(ingredientSet) {
                 let removeIngredientBtn = document.createElement("i")
                 removeIngredientBtn.classList.add("far", "fa-times-circle", "remove-selected-ingredient")
                 removeIngredientBtn.addEventListener("click", e => {
+                    removeIngredientFilter(ingredient)
                     selectedIngredientContainer.remove()
-                    displayRecipes(recipes)
+                    let searchQuery = document.querySelector("#search-input").text
+                    searchAlgorithmV1(searchQuery, searchMap)
+                    // searchAlgorithmV2(e, recipes)
                 })
                 selectedIngredientContainer.appendChild(removeIngredientBtn)
                 document.querySelector("#selected-container").appendChild(selectedIngredientContainer)

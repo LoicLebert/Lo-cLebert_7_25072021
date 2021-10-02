@@ -1,45 +1,57 @@
-/**
- * 
- */
-
 import { recipes } from "../data/data.js"
+/**
+ * Creates an array that filters ingredients, appliance and ustensils
+ */
+const selectedIngredientFilters = new Set([])
+const selectedApplianceFilters = new Set([])
+const selectedUstensilsFilters = new Set([])
 
-const selectedIngredientFilters = []
-const selectedApplianceFilters = []
-const selectedUstensilsFilters = []
+export function removeIngredientFilter(ingredient) {
+    selectedIngredientFilters.delete(ingredient.toLowerCase())
+}
 
-export function tagSelected(e) {
+export function removeApplianceFilter(appliance) {
+    selectedApplianceFilters.delete(appliance.toLowerCase())
+}
+
+export function removeUstensilsFilter(ustensils) {
+    selectedUstensilsFilters.delete(ustensils.toLowerCase())
+}
+/**
+ * This function pushes 
+ */
+export function ingredientTagSelected(ingredient) {
     recipes.forEach(recipe => {
-        recipe.ingredients.forEach(ingredient => {
-            if (e.target.text === ingredient.ingredient) {
-                selectedIngredientFilters.push(e.target.text.toLowerCase())
+        recipe.ingredients.forEach(recipeIngredient => {
+            if (ingredient === recipeIngredient.ingredient) {
+                selectedIngredientFilters.add(ingredient.toLowerCase())
             }
         })
     })
-    console.log(e.target.text)
-    console.log(selectedIngredientFilters)
 }
 
-function tagAlgorithm(recipes, selectedFilter) {
-    const tagResultSet = new Set()
-
+export function applianceTagSelected(appliance) {
     recipes.forEach(recipe => {
-        if ((recipe.appliance.toLowerCase()) === selectedFilter)
-            tagResultSet.add(recipe)
+        if (appliance === recipe.appliance) {
+            selectedApplianceFilters.add(appliance.toLowerCase())
+        }
+    })
+}
 
-        recipe.ustensils.forEach(ustensils => {
-            if ((ustensils.toLowerCase()) === selectedFilter)
-                tagResultSet.add(recipe)
-        })
-
-        recipe.ingredients.forEach(ingredient => {
-            if ((ingredient.ingredient.toLowerCase()) === selectedFilter)
-                tagResultSet.add(recipe)
+export function ustensilsTagSelected(ustensils) {
+    recipes.forEach(recipe => {
+        recipe.ustensils.forEach(recipeUstensils => {
+            if (ustensils === recipeUstensils) {
+                selectedUstensilsFilters.add(ustensils.toLowerCase())
+            }
         })
     })
-    return tagResultSet
 }
 
+
+/**
+ * This function changes the value of "recipe" according to the filters
+ */
 export function searchFilters(recipes) {
     recipes = filterByIngredient(recipes)
     recipes = filterByAppliance(recipes)
@@ -47,40 +59,29 @@ export function searchFilters(recipes) {
     return recipes
 }
 
+/**
+ * Those functions filter ingredients, appliance and ustensils by pushing them to the array
+ */
 function filterByIngredient(recipes) {
-    let filteredRecipes
-    if (selectedIngredientFilters > 0) {
-        for (let i = 0; i < selectedIngredientFilters.length; i++) {
-            filteredRecipes = recipes.filter(recipe => recipe.ingredients.find(ingredient => ingredient.ingredient == selectedIngredientFilters[i]));
-        }
+    const filters = Array.from(selectedIngredientFilters)
+    for (let i = 0; i < filters.length; i++) {
+        recipes = recipes.filter(recipe => recipe.ingredients.find(ingredient => ingredient.ingredient.toLowerCase() == filters[i]));
     }
-    else {
-        filteredRecipes = recipes
-    }
-    return filteredRecipes
+    return recipes
 }
 
 function filterByAppliance(recipes) {
-    let filteredRecipes
-    if (selectedApplianceFilters < 0) {
-        for (let i = 0; i < selectedApplianceFilters.length; i++) {
-            filteredRecipes = recipes.filter(recipe => recipe.appliance.find(appliance == selectedApplianceFilters[i]));
-        }
+    const filters = Array.from(selectedApplianceFilters)
+    for (let i = 0; i < filters.length; i++) {
+        recipes = recipes.filter(recipe => recipe.appliance.toLowerCase() == filters[i]);
     }
-    else {
-        filteredRecipes = recipes
-    }
-    return filteredRecipes
+    return recipes
 }
+
 function filterByUstensils(recipes) {
-    let filteredRecipes
-    if (selectedUstensilsFilters < 0) {
-        for (let i = 0; i < selectedUstensilsFilters.length; i++) {
-            filteredRecipes = recipes.filter(recipe => recipe.ustensils.find(ustensils => ustensils == selectedUstensilsFilters[i]));
-        }
+    const filters = Array.from(selectedUstensilsFilters)
+    for (let i = 0; i < filters.length; i++) {
+        recipes = recipes.filter(recipe => recipe.ustensils.find(ustensils => ustensils.toLowerCase() == filters[i]));
     }
-    else {
-        filteredRecipes = recipes
-    }
-    return filteredRecipes
+    return recipes
 }

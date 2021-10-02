@@ -47,9 +47,9 @@ export function displayDropdown() {
 
 export function displayRecipes(recipes) {
     document.querySelector("#recipes-section").innerHTML = ""
-    // if (recipes.length == 0) {
-    //     document.querySelector("#recipes-section").innerHTML = "ERROR"
-    // }
+    if (recipes.length == 0) {
+        document.querySelector("#recipes-section").innerHTML = "ERROR"
+    }
     recipes?.forEach(recipe => {
         let recipeContainer = document.createElement("div")
         recipeContainer.id = "recipe-container"

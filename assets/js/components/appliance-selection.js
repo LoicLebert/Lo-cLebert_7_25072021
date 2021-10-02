@@ -1,3 +1,9 @@
+import { applianceTagSelected } from "./filters.js"
+import { searchAlgorithmV1 } from "./search.js"
+import { searchAlgorithmV2 } from "./search.js"
+import { searchMap } from "./searchMapInitialisation.js"
+import { removeApplianceFilter } from "./filters.js"
+
 /**
  * This function launches the receipes display according to the user request
  * @param {*} e 
@@ -39,7 +45,9 @@ export function displayApplianceFilter(applianceSet) {
         document.querySelector("#dropdown-appliance-container").appendChild(applianceHTML)
         applianceHTML.addEventListener("click", e => {
             e.preventDefault()
-            tagSelected(e)
+            applianceTagSelected(appliance)
+            let searchQuery = document.querySelector("#search-input").text
+            searchAlgorithmV1(searchQuery, searchMap)
             let tagId = "selected-appliance-container-" + appliance
             var element = document.getElementById(tagId);
             if (typeof (element) == 'undefined' || element == null) {
@@ -47,12 +55,14 @@ export function displayApplianceFilter(applianceSet) {
                 selectedApplianceContainer.id = "selected-appliance-container-" + appliance
                 selectedApplianceContainer.classList.add("selected-appliance-container")
                 selectedApplianceContainer.innerHTML = appliance
-
                 let removeApplianceBtn = document.createElement("i")
                 removeApplianceBtn.classList.add("far", "fa-times-circle", "remove-selected-appliance")
                 removeApplianceBtn.addEventListener("click", e => {
+                    removeApplianceFilter(appliance)
                     selectedApplianceContainer.remove()
-                    displayRecipes(recipes)
+                    let searchQuery = document.querySelector("#search-input").text
+                    searchAlgorithmV1(searchQuery, searchMap)
+                    // searchAlgorithmV2(e, recipes)
                 })
                 selectedApplianceContainer.appendChild(removeApplianceBtn)
                 document.querySelector("#selected-container").appendChild(selectedApplianceContainer)
