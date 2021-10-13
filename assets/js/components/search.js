@@ -25,32 +25,6 @@ export function searchAlgorithmV1(searchQuery, searchMap) {
     displayRecipes(filteredResults)
 }
 
-/** END OF THE FIRST ALGORITHM PART 
- * ===========================================================================================
- */
-
-/** START OF THE SECOND ALGORITHM PART
- * ===========================================================================================
- */
-
-/**
- * This function launches the algorithm when user uses the input search 
- */
-
-export function setupInputSearch_secondAlgorithm(recipes) {
-    document.querySelector("#search-input").addEventListener("keydown", (e) => searchAlgorithmV2(e.target.value.toLowerCase(), recipes))
-}
-
-/**
- * This function launches the receipes display according to the user request
- * @param {*} e 
- */
-export function searchAlgorithmV2(searchQuery, recipes) {
-    const searchResults = directSearchAlgorithm(recipes, searchQuery)
-    const filteredResults = searchFilters(searchResults)
-    displayRecipes(filteredResults)
-}
-
-/** END OF THE SECOND ALGORITHM PART
+/** END OF THE FIRST ALGORITHM PART
  * ===========================================================================================
  */
