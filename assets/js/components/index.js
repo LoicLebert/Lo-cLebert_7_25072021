@@ -3,7 +3,7 @@ import { displayIngredientFilter } from "./ingredient-selection.js"
 import { displayApplianceFilter } from "./appliance-selection.js"
 import { displayUstensilsFilter } from "./ustensils-selection.js"
 import { displayDropdown, displayRecipes } from "./display.js"
-import { setupInputSearch_firstAlgorithm } from "./search.js"
+import { setupInputSearch_secondAlgorithm } from "./search.js"
 import { searchMap, searchAlgorithmMapping } from "./searchMapInitialisation.js"
 
 /** 
@@ -30,7 +30,7 @@ function init() {
     displayDropdown()
     displayRecipes(orginalRecipeList)
     searchAlgorithmMapping(orginalRecipeList)
-    setupInputSearch_firstAlgorithm(searchMap)
+    setupInputSearch_secondAlgorithm(orginalRecipeList)
 }
 
 init()
