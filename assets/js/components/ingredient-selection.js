@@ -1,6 +1,5 @@
 import { ingredientTagSelected } from "./filters.js"
 import { searchAlgorithmV1 } from "./search.js"
-import { searchAlgorithmV2 } from "./search.js"
 import { searchMap } from "./searchMapInitialisation.js"
 import { removeIngredientFilter } from "./filters.js"
 /**

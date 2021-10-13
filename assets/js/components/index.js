@@ -3,9 +3,8 @@ import { displayIngredientFilter } from "./ingredient-selection.js"
 import { displayApplianceFilter } from "./appliance-selection.js"
 import { displayUstensilsFilter } from "./ustensils-selection.js"
 import { displayDropdown, displayRecipes } from "./display.js"
-import { setupInputSearch_firstAlgorithm, setupInputSearch_secondAlgorithm } from "./search.js"
+import { setupInputSearch_firstAlgorithm } from "./search.js"
 import { searchMap, searchAlgorithmMapping } from "./searchMapInitialisation.js"
-// import { setupTag } from "./filters.js"
 
 /** 
  * This part sorts ingredients, appliances and ustensils inside sets to prevent them from repeating themselves
@@ -32,7 +31,6 @@ function init() {
     displayRecipes(orginalRecipeList)
     searchAlgorithmMapping(orginalRecipeList)
     setupInputSearch_firstAlgorithm(searchMap)
-    // setupInputSearch_secondAlgorithm(orginalRecipeList)
 }
 
 init()

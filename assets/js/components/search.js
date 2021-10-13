@@ -51,55 +51,6 @@ export function searchAlgorithmV2(searchQuery, recipes) {
     displayRecipes(filteredResults)
 }
 
-/** END OF THE SECOND ALGORITHM PART 
- * ===========================================================================================
- */
-
-/**
- * START OF THE SECOND ALGORITHM PART
- * ===========================================================================================
- */
-
-/**
- * This algorithm loops on each recipe for every user research. ALGO V2
- * @param {*} recipes
- * @param {*} searchInput
- * @param {*} filters
- * @returns
- */
-export function directSearchAlgorithm(recipes, searchInput) {
-    if (searchInput.length < 3) {
-        return recipes
-    }
-
-    const recipesResultSet = new Set()
-
-    recipes.forEach(recipe => {
-
-        if ((recipe.name.toLowerCase()).substring(0, searchInput.length) === searchInput) {
-            recipesResultSet.add(recipe)
-        }
-
-        else if ((recipe.appliance.toLowerCase()).substring(0, searchInput.length) === searchInput)
-            recipesResultSet.add(recipe)
-
-        else if ((recipe.description.toLowerCase()).substring(0, searchInput.length) === searchInput)
-            recipesResultSet.add(recipe)
-
-        recipe.ingredients.forEach(ingredient => {
-            if ((ingredient.ingredient.toLowerCase()).substring(0, searchInput.length) === searchInput)
-                recipesResultSet.add(recipe)
-        })
-
-        recipe.ustensils.forEach(ustensils => {
-            if ((ustensils.toLowerCase()).substring(0, searchInput.length) === searchInput)
-                recipesResultSet.add(recipe)
-        })
-    })
-    return recipesResultSet
-}
-
-/**
- * END OF THE SECOND ALGORITHM PART
+/** END OF THE SECOND ALGORITHM PART
  * ===========================================================================================
  */

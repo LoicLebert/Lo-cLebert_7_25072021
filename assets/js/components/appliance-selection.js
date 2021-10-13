@@ -1,6 +1,5 @@
 import { applianceTagSelected } from "./filters.js"
 import { searchAlgorithmV1 } from "./search.js"
-import { searchAlgorithmV2 } from "./search.js"
 import { searchMap } from "./searchMapInitialisation.js"
 import { removeApplianceFilter } from "./filters.js"
 

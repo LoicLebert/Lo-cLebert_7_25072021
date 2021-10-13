@@ -1,6 +1,5 @@
 import { ustensilsTagSelected } from "./filters.js"
 import { searchAlgorithmV1 } from "./search.js"
-import { searchAlgorithmV2 } from "./search.js"
 import { searchMap } from "./searchMapInitialisation.js"
 import { removeUstensilsFilter } from "./filters.js"
 
